@@ -1,0 +1,53 @@
+group = 'org.openda'
+version = '3.0'
+
+apply plugin: "pride"
+apply plugin: 'maven'
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: AddModelDependencies
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.prezi.pride:gradle-pride-plugin:0.11"
+    }
+}
+
+class AddModelDependencies implements Plugin<Project> {
+// Add a dependency on all currently available projects which name starts with 'model_'
+    void apply(Project project) {
+        project.task('addModelDependencies') {
+            println 'addModelDependencies'
+            project.rootProject.allprojects {
+                myProject ->
+                    if (myProject.name.startsWith('model_')) {
+                        println myProject.ext.has('model')
+                        println myProject.version
+                        println "Adding project '" + myProject.getPath() + "'"
+                        project.dependencies.add('compile', myProject)
+                    }
+            }
+        }
+    }
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url 'http://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/'
+    }
+    mavenCentral()
+}
+
+dependencies{
+    compile group: "org.openda", name: "core", version: "3.0"
+    compile group: "org.openda", name: "observers", version: "3.0"
+    compile group: "org.openda", name: "models", version: "3.0"
+    compile group: "org.openda", name: "algorithms", version: "3.0"
+    compile group: 'net.sf.jedit-syntax', name: 'jedit-syntax', version: '2.2.2'
+}
+
+mainClassName = 'org.openda.application.OpenDaApplication'
