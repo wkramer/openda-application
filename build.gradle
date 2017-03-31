@@ -23,7 +23,7 @@ class AddModelDependencies implements Plugin<Project> {
             println 'addModelDependencies'
             project.rootProject.allprojects {
                 myProject ->
-                    if (myProject.name.startsWith('model_')) {
+                    if (myProject.name.startsWith('model-')) {
                         println myProject.ext.has('model')
                         println myProject.version
                         println "Adding project '" + myProject.getPath() + "'"
