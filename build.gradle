@@ -35,11 +35,13 @@ class AddModelDependencies implements Plugin<Project> {
 }
 
 repositories {
-    mavenLocal()
     maven {
         url 'http://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/'
     }
     mavenCentral()
+    maven {
+        url "file://${rootDir}/repo/"
+    }
 }
 
 dependencies{
