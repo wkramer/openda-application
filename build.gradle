@@ -7,6 +7,8 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: AddModelDependencies
 
+applicationName = "openda"
+
 buildscript {
     repositories {
         mavenCentral()
